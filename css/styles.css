@@ -7,6 +7,7 @@
 body {
   margin: 0px;
   position: relative;
+  font-size: 10px;
 }
 
 header {
@@ -25,10 +26,6 @@ header {
 h1 {
   display: block;
   margin: 2% 2%;
-  /*margin-top: -5%*/
-}
-
-#idea-header {
   color: #00A79D;
 }
 
@@ -49,7 +46,7 @@ h1 {
   color: #afb0b3;
 }
 
-#save-button {
+#save-btn {
   background-color: #00A79D;
   border: none;
   border-radius: 0px;
@@ -58,11 +55,11 @@ h1 {
   width: 50vw;
 }
 
-#save-button:hover {
+#save-btn:hover {
   background-color: #045E55;
 }
 
-#idea-list {
+.to-do {
   align-items: center;
   bottom: 0px;
   display: flex;
@@ -74,7 +71,7 @@ h1 {
   width: 100vw;
 }
 
-[name=search-field] {
+.filter {
   left: 25%;
   position: fixed;
   top: 44%;
@@ -167,9 +164,7 @@ h3 {
     width: 70%
   }
 
-  
-
-  #save-button {
+  #save-btn {
     margin-top: 5px;
     width: 70%;
   }
@@ -178,13 +173,13 @@ h3 {
     display: flex;
   }
 
-  [name=search-field] {
+  .filter {
     left: 15%;
     top: 41%;
     width: 70%;
   }
 
-  #idea-list {
+  .to-do{
     height: 50vh;
     top: 48%;
     width: 100%;
@@ -250,11 +245,11 @@ h3 {
     width: 90%
   }
 
-  [name=idea-description] {
+  .task {
     height: 40px;
   }
 
-  #save-button {
+  #save-btn {
     margin-top: 5px;
     width: 90%;
   }
@@ -263,13 +258,13 @@ h3 {
     display: flex;
   }
 
-  [name=search-field] {
+ .filter {
     left: 5%;
     top: 32%;
     width: 90%;
   }
 
-  #idea-list {
+ .to-do {
     height: 60vh;
     top: 39%;
     width: 100%;
