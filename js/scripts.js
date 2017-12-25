@@ -1,10 +1,11 @@
-var $ideaTitle = $('[name=idea-title]');
-var $ideaDescription = $('[name=idea-description');
+var title = $('.title');
+var task = $('.task');
+$('#save-btn').on('click', newTask);
 
-$('#save-button').click(function(event) {
-  var idea = new Idea (Date.now(), $ideaTitle.val(), $ideaDescription.val());
+function newTask(event) {
+  var idea = new Idea (Date.now(), title.val(), task.val());
 
-  if (`${$ideaTitle.val()}` == "" || `${$ideaDescription.val()}` == ""){
+  if (`${title.val()}` == "" || `${task.val()}` == ""){
     return false;
   } else {
    event.preventDefault();
@@ -12,7 +13,7 @@ $('#save-button').click(function(event) {
    toLocalStorage(idea);
    inputReset();
  }
-});
+};
 
 function Idea (id, title, body) {
   this.id = id;
@@ -40,8 +41,8 @@ function prependIdea(idea) {
   );
 };
 
-$('[name=search-field]').on('keyup', function() {
-  var searchRequest = $('[name=search-field]').val();
+$('#filter').on('keyup', function() {
+  var searchRequest = $('#filter').val();
   $('article').each(function(){
     var searchResult = $(this).text().indexOf(searchRequest);
     this.style.display = searchResult > -1 ? "" : "none";
@@ -49,9 +50,9 @@ $('[name=search-field]').on('keyup', function() {
 })
 
 function inputReset() {
-  $ideaTitle.val('');
-  $ideaDescription.val('');
-  $ideaTitle.focus();
+  title.val('');
+  task.val('');
+  title.focus();
 };
 
 function toLocalStorage(idea) {
@@ -71,7 +72,7 @@ window.onload = function() {
  pageLoad();
 };
 
-$('#idea-list').on('click', 'h2', function() {
+$('.to-do').on('click', 'h2', function() {
   $(this).prop('contenteditable', true).focus();
   $(this).focusout( function() {
     var key = $(this).closest('article').attr('id')
@@ -84,7 +85,7 @@ $('#idea-list').on('click', 'h2', function() {
   });
 
 
-$('#idea-list').on('click', 'p', function() {
+$('.to-do').on('click', 'p', function() {
   $(this).prop('contenteditable', true).focus();
   $(this).focusout( function() {
     var key = $(this).closest('article').attr('id')
@@ -97,14 +98,14 @@ $('#idea-list').on('click', 'p', function() {
   });
 
 
-$('#idea-list').on('click', '.remove', function() {
+$('.to-do').on('click', '.remove', function() {
  $(this).closest('article').fadeOut(function() {
    $(this).remove();
  })
  localStorage.removeItem($(this).closest('article').attr('id'));
 });
 
-$('#idea-list').on('click', '.quality-up', function() {
+$('.to-do').on('click', '.quality-up', function() {
   
      var key = $(this).closest('article').attr('id')
      var retrievedIdea = localStorage.getItem(key);
@@ -126,7 +127,7 @@ $('#idea-list').on('click', '.quality-up', function() {
  } 
 });
 
-$('#idea-list').on('click', '.quality-down', function() {
+$('.to-do').on('click', '.quality-down', function() {
     var key = $(this).closest('article').attr('id')
     var retrievedIdea = localStorage.getItem(key);
     var parsedIdea = JSON.parse(retrievedIdea);
