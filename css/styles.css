@@ -27,7 +27,7 @@ header {
 h1 {
   display: block;
   margin: 2% 2%;
-  color: #00A79D;
+  color: #900c3ft;
   font-size: 2.5rem;
 }
 
@@ -143,6 +143,18 @@ h3 {
   margin: 0px auto 10px 10px;
   vertical-align: super;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media screen and (max-width: 770px) {
   header {
