@@ -1,48 +1,54 @@
-var title = $('.title');
-var task = $('.task');
+$('.title').on('input', enableSaveBtn);
+$('.task').on('input', enableSaveBtn);
 
-$('#save-btn').on('click', addTask);
+// function addTask(event) {
+//     event.preventDefault();
+//     prependTask(newTask);
+//     toLocalStorage(newTask);
+//     inputReset();
+//   }
+// };
 
-
-function addTask(event) {
-  var newTask = new Task (Date.now(), title.val(), task.val());
-  if (title.val('') || task.val('')){
-    $('#save-btn').attr('disabled', true);
+function enableSaveBtn(e) {
+  e.preventDefault();
+  if($('.title').val() && $('.task').val()) {
+    $('.save-btn').attr('disabled', false);
+    $('.save-btn').on('click', grabValue);
   } else {
-    event.preventDefault();
-    $('#save-btn').attr('disabled', false);
-    // prependTask(newTask);
-    // toLocalStorage(newTask);
-    // inputReset();
-    console.log(newTask);
+    $('.save-btn').attr('disabled', true);
   }
 };
 
-// function Task (id, title, task) {
-//   this.id = id;
-//   this.title = title;
-//   this.task = task;
-//   this.level = 'level: normal';
-// }
+function clearInput(){
+  $('.title').val('');
+  $('.task').val('');
+}
 
-// function prependTask(newTask) {
-//   $('.to-do').prepend(
-//     `<article id="${idea.id}">
-//       <h2>${idea.title}</h2>
-//       <label for="remove-button">
-//         <button class="remove button"></button>
-//       </label>
-//       <p>${idea.body}</p>
-//       <label for="quality-up-button" class="upL">
-//         <button class="quality-up button" name="quality-up-button"></button>
-//       </label>
-//       <label for="quality-down-button" class="downL">
-//         <button class="quality-down button" name="quality-down-button"></button>
-//       </label>
-//       <h3>${idea.quality}</h3>
-//     </article>`
-//   );
-// };
+function Task (id, title, task) {
+  this.id = id;
+  this.title = title;
+  this.task = task;
+  this.level = 'level: normal';
+}
+
+function grabValue(e){
+  e.preventDefault();
+  var title = $('.title').val();
+  var task = $('.task').val();
+  var id = Date.now();
+  var newTask = new Task (id, title, task);
+  showTask(newTask);
+  clearInput();
+};
+
+function showTask(newTask) {
+  $('.to-do').prepend(
+    `<article id="${newTask.id}"><h2>${newTask.title}</h2><label for="remove-button"><button class="remove button"></button></label><p>${newTask.task}</p><label for="quality-up-button" class="upL"><button class="quality-up button" name="quality-up-button"></button></label><label for="quality-down-button" class="downL"><button class="quality-down button" name="quality-down-button"></button></label><h3>${newTask.level}</h3></article>`
+  );
+};
+
+
+
 
 // $('#filter').on('keyup', function() {
 //   var searchRequest = $('#filter').val();
@@ -51,12 +57,6 @@ function addTask(event) {
 //     this.style.display = searchResult > -1 ? "" : "none";
 //   })
 // })
-
-// function inputReset() {
-//   title.val('');
-//   task.val('');
-//   title.focus();
-// };
 
 // function toLocalStorage(idea) {
 //  var stringifiedIdea = JSON.stringify(idea);
