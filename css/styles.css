@@ -13,6 +13,7 @@ body {
 header {
   align-items: center;
   background-color: #E5F3F2;
+  /*background-image: url(css/img/notepage.jpg);*/
   display: flex;
   flex-direction: column;
   font-family: 'Roboto Slab', serif;
@@ -27,6 +28,7 @@ h1 {
   display: block;
   margin: 2% 2%;
   color: #00A79D;
+  font-size: 2.5rem;
 }
 
 #box-header {
@@ -36,27 +38,29 @@ h1 {
 .input-field {
   border: 1px solid #D1D3D4;
   display: block;
-  height: 19px;
+  height: 2rem;
   margin: 2.5% auto;
   resize: none;
   width: 50vw;
+  font-size: 1rem;
 }
 
 .input-field:placeholder {
   color: #afb0b3;
 }
 
-#save-btn {
-  background-color: #00A79D;
+.save-btn {
+  background-color: #555555;
   border: none;
   border-radius: 0px;
   color: #FFFFFF;
-  height: 20px;
+  height: 2rem;
   width: 50vw;
+  font-size: 1rem;
 }
 
-#save-btn:hover {
-  background-color: #045E55;
+.save-btn:hover {
+  background-color: #900c3f;
 }
 
 .to-do {
