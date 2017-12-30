@@ -1,7 +1,9 @@
 $('.title').on('input', enableSaveBtn); 
 $('.task').on('input', enableSaveBtn);
 $('.save-btn').on('click', grabValue);
-
+$('.to-do').on('click', '.remove', removeTask);
+$('.to-do').on('click', 'h2', editText);
+$('.to-do').on('click', 'p', editText);
 
 function enableSaveBtn(e) {
   e.preventDefault();
@@ -11,7 +13,6 @@ function enableSaveBtn(e) {
     $('.save-btn').attr('disabled', true);
   }
 };
-
 
 function Task (id, title, task) {
   this.id = id;
@@ -27,7 +28,6 @@ function grabValue(e){
   showTask(newTask);
   clearInput();
 };
-
 
 function storeInfo(newTask) {
   var stringifiedTask = JSON.stringify(newTask);
@@ -48,7 +48,15 @@ function persistRefresh() {
 
 function showTask(newTask) {
   $('.to-do').append(
-    `<article id="${newTask.id}"><h2>${newTask.title}</h2><label for="remove-button"><button class="remove button"></button></label><p>${newTask.task}</p><label for="quality-up-button" class="upL"><button class="quality-up button" name="quality-up-button"></button></label><label for="quality-down-button" class="downL"><button class="quality-down button" name="quality-down-button"></button></label><h3>${newTask.level}</h3></article>`
+    `<article id="${newTask.id}">
+      <h2 class="title">${newTask.title}</h2>
+      <button class="remove button"></button>
+      <p class="task">${newTask.task}</p>
+      <button class="quality-up button" name="quality-up-button">
+      </button>
+      <button class="quality-down button" name="quality-down-button"></button>
+      <h3>${newTask.level}</h3>
+    </article>`
   );
 };
 
@@ -58,7 +66,27 @@ function clearInput(){
   $('.save-btn').attr('disabled', true);
 }
 
-// $('.to-do').on('click', 'h2', function() {
+function removeTask() {
+  $(this).parent().remove();
+  localStorage.removeItem($(this).closest('article').attr('id'));
+}
+
+function editText() {
+  $(this).prop('contenteditable', true).focus();
+  $(this).focusout(getEditKey);
+}
+
+function getEditKey() {
+  var key = $(this).closest('article').attr('id');
+  var retrievedKey = localStorage.getItem(key);
+  var parsedKey = JSON.parse(retrievedKey);
+  parsedKey['title'] = $(this).html();
+  parsedKey['task'] = $(this).html();
+  var stringifiedKey = JSON.stringify(parsedKey);
+  localStorage.setItem(key, stringifiedKey);
+  };
+
+// $('#idea-list').on('click', 'h2', function() {
 //   $(this).prop('contenteditable', true).focus();
 //   $(this).focusout( function() {
 //     var key = $(this).closest('article').attr('id')
@@ -69,7 +97,6 @@ function clearInput(){
 //     localStorage.setItem(key, stringifiedObject);
 //     })
 //   });
-
 
 // $('.to-do').on('click', 'p', function() {
 //   $(this).prop('contenteditable', true).focus();
@@ -82,14 +109,6 @@ function clearInput(){
 //     localStorage.setItem(key, stringifiedObject);
 //     })
 //   });
-
-
-// $('.to-do').on('click', '.remove', function() {
-//  $(this).closest('article').fadeOut(function() {
-//    $(this).remove();
-//  })
-//  localStorage.removeItem($(this).closest('article').attr('id'));
-// });
 
 // $('.to-do').on('click', '.quality-up', function() {
   
