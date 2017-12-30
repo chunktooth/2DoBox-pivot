@@ -1,28 +1,17 @@
-$('.title').on('input', enableSaveBtn);
+$('.title').on('input', enableSaveBtn); 
 $('.task').on('input', enableSaveBtn);
+$('.save-btn').on('click', grabValue);
 
-// function addTask(event) {
-//     event.preventDefault();
-//     prependTask(newTask);
-//     toLocalStorage(newTask);
-//     inputReset();
-//   }
-// };
 
 function enableSaveBtn(e) {
   e.preventDefault();
   if($('.title').val() && $('.task').val()) {
     $('.save-btn').attr('disabled', false);
-    $('.save-btn').on('click', grabValue);
   } else {
     $('.save-btn').attr('disabled', true);
   }
 };
 
-function clearInput(){
-  $('.title').val('');
-  $('.task').val('');
-}
 
 function Task (id, title, task) {
   this.id = id;
@@ -33,47 +22,41 @@ function Task (id, title, task) {
 
 function grabValue(e){
   e.preventDefault();
-  var title = $('.title').val();
-  var task = $('.task').val();
-  var id = Date.now();
-  var newTask = new Task (id, title, task);
+  var newTask = new Task (Date.now(), $('.title').val(), $('.task').val());
+  storeInfo(newTask);
   showTask(newTask);
   clearInput();
 };
 
+
+function storeInfo(newTask) {
+  var stringifiedTask = JSON.stringify(newTask);
+  localStorage.setItem(newTask.id, stringifiedTask);
+};
+
+window.onload = function() {
+ persistRefresh();
+};
+
+function persistRefresh() {
+ for (var i = 0; i < localStorage.length; i++) {
+   var retrievedInfo = localStorage.getItem(localStorage.key(i));
+   var parsedInfo = JSON.parse(retrievedInfo);
+   showTask(parsedInfo);
+ };
+};
+
 function showTask(newTask) {
-  $('.to-do').prepend(
+  $('.to-do').append(
     `<article id="${newTask.id}"><h2>${newTask.title}</h2><label for="remove-button"><button class="remove button"></button></label><p>${newTask.task}</p><label for="quality-up-button" class="upL"><button class="quality-up button" name="quality-up-button"></button></label><label for="quality-down-button" class="downL"><button class="quality-down button" name="quality-down-button"></button></label><h3>${newTask.level}</h3></article>`
   );
 };
 
-
-
-
-// $('#filter').on('keyup', function() {
-//   var searchRequest = $('#filter').val();
-//   $('article').each(function(){
-//     var searchResult = $(this).text().indexOf(searchRequest);
-//     this.style.display = searchResult > -1 ? "" : "none";
-//   })
-// })
-
-// function toLocalStorage(idea) {
-//  var stringifiedIdea = JSON.stringify(idea);
-//  localStorage.setItem(idea.id, JSON.stringify(idea));
-// };
-
-// function pageLoad() {
-//  for (var i = 0; i < localStorage.length; i++) {
-//    var returnIdea = localStorage.getItem(localStorage.key(i));
-//    var parseIdea = JSON.parse(returnIdea);
-//    prependIdea(parseIdea);
-//  };
-// };
-
-// window.onload = function() {
-//  pageLoad();
-// };
+function clearInput(){
+  $('.title').val('');
+  $('.task').val('');
+  $('.save-btn').attr('disabled', true);
+}
 
 // $('.to-do').on('click', 'h2', function() {
 //   $(this).prop('contenteditable', true).focus();
@@ -154,3 +137,11 @@ function showTask(newTask) {
 //  } 
 // });
 
+
+// $('#filter').on('keyup', function() {
+//   var searchRequest = $('#filter').val();
+//   $('article').each(function(){
+//     var searchResult = $(this).text().indexOf(searchRequest);
+//     this.style.display = searchResult > -1 ? "" : "none";
+//   })
+// })

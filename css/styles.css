@@ -8,12 +8,15 @@ body {
   margin: 0px;
   position: relative;
   font-size: 10px;
+  background-image: url('../img/legal-pad.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
 }
 
 header {
   align-items: center;
-  background-color: #E5F3F2;
-  /*background-image: url(css/img/notepage.jpg);*/
+  /*background-color: #E5F3F2;*/
   display: flex;
   flex-direction: column;
   font-family: 'Roboto Slab', serif;
