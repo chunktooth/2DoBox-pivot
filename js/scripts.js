@@ -2,8 +2,20 @@ $('.title').on('input', enableSaveBtn);
 $('.task').on('input', enableSaveBtn);
 $('.save-btn').on('click', grabValue);
 $('.to-do').on('click', '.remove', removeTask);
-$('.to-do').on('click', 'h2', editText);
-$('.to-do').on('click', 'p', editText);
+$('.to-do').on('click', '.title', editTitle);
+$('.to-do').on('click', '.task', editTask);
+// $('.to-do').on('click', '.level-up', levelHigh);
+// $('.to-do').on('click', '.level-down', levelLow);
+
+
+
+// var key = $(this).closest('article').attr('id');
+// var retrievedKey = localStorage.getItem(key);
+// var parsedKey = JSON.parse(retrievedKey);
+// var stringifiedObject = JSON.stringify(parsedKey);
+// localStorage.setItem(key, stringifiedObject);
+
+
 
 function enableSaveBtn(e) {
   e.preventDefault();
@@ -52,9 +64,9 @@ function showTask(newTask) {
       <h2 class="title">${newTask.title}</h2>
       <button class="remove button"></button>
       <p class="task">${newTask.task}</p>
-      <button class="quality-up button" name="quality-up-button">
+      <button class="level-up button" name="quality-up-button">
       </button>
-      <button class="quality-down button" name="quality-down-button"></button>
+      <button class="level-down button" name="quality-down-button"></button>
       <h3>${newTask.level}</h3>
     </article>`
   );
@@ -71,66 +83,45 @@ function removeTask() {
   localStorage.removeItem($(this).closest('article').attr('id'));
 }
 
-function editText() {
+function editTitle() {
   $(this).prop('contenteditable', true).focus();
-  $(this).focusout(getEditKey);
-}
+  $(this).focusout(function() {
+    var key = $(this).closest('article').attr('id')
+    var retrievedTitle = localStorage.getItem(key);
+    var parsedTitle = JSON.parse(retrievedTitle);
+    parsedTitle.title = $(this).html();
+    var stringifiedObject = JSON.stringify(parsedTitle);
+    localStorage.setItem(key, stringifiedObject);
+  });
+};
 
-function getEditKey() {
-  var key = $(this).closest('article').attr('id');
-  var retrievedKey = localStorage.getItem(key);
-  var parsedKey = JSON.parse(retrievedKey);
-  parsedKey['title'] = $(this).html();
-  parsedKey['task'] = $(this).html();
-  var stringifiedKey = JSON.stringify(parsedKey);
-  localStorage.setItem(key, stringifiedKey);
-  };
+function editTask(){
+  $(this).prop('contenteditable', true).focus();
+  $(this).focusout(function() {
+    var key = $(this).closest('article').attr('id')
+    var retrievedTask = localStorage.getItem(key);
+    var parsedTask = JSON.parse(retrievedTask);
+    parsedTask.task = $(this).html();
+    var stringifiedObject = JSON.stringify(parsedTask);
+    localStorage.setItem(key, stringifiedObject);
+  });
+};
 
-// $('#idea-list').on('click', 'h2', function() {
-//   $(this).prop('contenteditable', true).focus();
-//   $(this).focusout( function() {
-//     var key = $(this).closest('article').attr('id')
-//     var retrievedIdea = localStorage.getItem(key);
-//     var parsedIdea = JSON.parse(retrievedIdea);
-//     parsedIdea['title'] = $(this).html();
-//     var stringifiedObject = JSON.stringify(parsedIdea);
-//     localStorage.setItem(key, stringifiedObject);
-//     })
-//   });
+//current working section-- changing quality section
 
-// $('.to-do').on('click', 'p', function() {
-//   $(this).prop('contenteditable', true).focus();
-//   $(this).focusout( function() {
-//     var key = $(this).closest('article').attr('id')
-//     var retrievedIdea = localStorage.getItem(key);
-//     var parsedIdea = JSON.parse(retrievedIdea);
-//     parsedIdea['body'] = $(this).html();
-//     var stringifiedObject = JSON.stringify(parsedIdea);
-//     localStorage.setItem(key, stringifiedObject);
-//     })
-//   });
-
-// $('.to-do').on('click', '.quality-up', function() {
-  
-//      var key = $(this).closest('article').attr('id')
-//      var retrievedIdea = localStorage.getItem(key);
-//      var parsedIdea = JSON.parse(retrievedIdea);
-
-//   if (parsedIdea['quality'] === ('quality: swill')) {
-//     $(this).closest('label').siblings('h3').text('quality: plausible');
-//     parsedIdea['quality'] = 'quality: plausible';
-
-//     var stringifiedObject = JSON.stringify(parsedIdea);
-//     localStorage.setItem(key, stringifiedObject);
-
-//   } else if (parsedIdea['quality'] === ('quality: plausible')) {
-//     $(this).closest('label').siblings('h3').text('quality: genius');
-//     parsedIdea['quality'] = 'quality: genius';
-
-//     var stringifiedObject = JSON.stringify(parsedIdea);
-//     localStorage.setItem(key, stringifiedObject);
+// function levelHigh(parsedKey){
+//   if (parsedKey.level === ('level: normal')) {
+//     $(this).closest('.level-up').siblings('h3').text('level: high');
+//     parsedKey.level = 'level: high';
+//   } else if (parsedKey.level === ('level: high')) {
+//     $(this).closest('level').siblings('h3').text('level: critical');
+//     parsedKey.level = 'level: critical';
 //  } 
-// });
+// };
+
+
+
+
 
 // $('.to-do').on('click', '.quality-down', function() {
 //     var key = $(this).closest('article').attr('id')
