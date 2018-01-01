@@ -124,19 +124,19 @@ p {
   background-image: url('../img/delete-hover.svg');  
 }
 
-.quality-up {
+.level-up {
   background-image: url('../img/upvote.svg');
 }
 
-.quality-up:hover {
+.level-up:hover {
   background-image: url('../img/upvote-hover.svg');
 }
 
-.quality-down {
+.level-down {
   background-image: url('../img/downvote.svg');
 }
 
-.quality-down:hover {
+.level-down:hover {
   background-image: url('../img/downvote-hover.svg');
 }
 
