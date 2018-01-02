@@ -4,21 +4,23 @@ $('.save-btn').on('click', grabValue);
 $('.to-do').on('click', '.remove', removeTask);
 $('.to-do').on('click', '.title', editTitle);
 $('.to-do').on('click', '.task', editTask);
-$('.to-do').on('click', '.level-up', levelHigh);
-// $('.to-do').on('click', '.level-down', levelLow);
+$('.to-do').on('click', '.level-up', levelUp);
+$('.to-do').on('click', '.level-down', levelDown);
 
-function getLocalStorageKey(){
-  var key = $(this).closest('article').attr('id');
-  var retrievedKey = localStorage.getItem(key);
-  var parsedKey = JSON.parse(retrievedKey);
-  levelHigh(parsedKey);
-  levelLow(parsedKey);
-};
 
-function setLocalStorageKey(parsedKey){
-  var stringifiedObject = JSON.stringify(parsedKey);
-  localStorage.setItem(parsedKey, stringifiedObject);
-}
+// Attempting to create function that passes the key 
+// to other level of importance buttons
+// function getLocalStorageKey(){
+//   var key = $(this).closest('article').attr('id');
+//   var retrievedKey = localStorage.getItem(key);
+//   var parsedKey = JSON.parse(retrievedKey);
+//   levelHigh(parsedKey);
+//   levelLow(parsedKey);
+// };
+// function setLocalStorageKey(parsedKey){
+//   var stringifiedObject = JSON.stringify(parsedKey);
+//   localStorage.setItem(parsedKey, stringifiedObject);
+// }
 
 function enableSaveBtn(e) {
   e.preventDefault();
@@ -110,46 +112,54 @@ function editTask(){
   });
 };
 
-//current working section-- changing quality section
+function levelDown() {
+  var key = $(this).closest('article').attr('id');
+  var retrievedKey = localStorage.getItem(key);
+  var parsedKey = JSON.parse(retrievedKey);
+  if (parsedKey.level === ('level: critical')) {
+    $(this).closest('.level-down').siblings('h3').text('level: high');
+    parsedKey.level = 'level: high';  
+  } else if (parsedKey.level === ('level: high')) {
+    $(this).closest('.level-down').siblings('h3').text('level: normal');
+    parsedKey.level = 'level: normal';
+  } else if (parsedKey.level === ('level: normal')) {
+    $(this).closest('.level-down').siblings('h3').text('level: low');
+    parsedKey.level = 'level: low';
+  } else if (parsedKey.level === ('level: low')) {
+    $(this).closest('.level-down').siblings('h3').text('level: none');
+    parsedKey.level = 'level: none';
+   }
+  var stringifiedObject = JSON.stringify(parsedTask);
+  localStorage.setItem(key, stringifiedObject);
+}
 
-// function levelHigh(parsedKey){
-//   if (parsedKey.level === ('level: normal')) {
-//     $(this).closest('.level-up').siblings('h3').text('level: high');
-//     parsedKey.level = 'level: high';
-//   } else if (parsedKey.level === ('level: high')) {
-//     $(this).closest('level').siblings('h3').text('level: critical');
-//     parsedKey.level = 'level: critical';
-//   } 
-//   setLocalStorageKey(parsedKey);
-// };
+function levelUp() {
+  var key = $(this).closest('article').attr('id');
+  var retrievedKey = localStorage.getItem(key);
+  var parsedKey = JSON.parse(retrievedKey);
+  if (parsedKey.level === ('level: none')) {
+    $(this).closest('.level-up').siblings('h3').text('level: low');
+    parsedKey.level = 'level: low';
+   } else if (parsedKey.level === ('level: low')) {
+    $(this).closest('.level-up').siblings('h3').text('level: normal');
+    parsedKey.level = 'level: normal';
+  } else if (parsedKey.level === ('level: normal')) {
+    $(this).closest('.level-up').siblings('h3').text('level: high');
+    parsedKey.level = 'level: high';
+  } else if (parsedKey.level === ('level: high')) {
+    $(this).closest('.level-up').siblings('h3').text('level: critical');
+    parsedKey.level = 'level: critical';
+  } 
+  var stringifiedObject = JSON.stringify(parsedTask);
+  localStorage.setItem(key, stringifiedObject);
+}
 
 
-
-
-
-// $('.to-do').on('click', '.quality-down', function() {
-//     var key = $(this).closest('article').attr('id')
-//     var retrievedIdea = localStorage.getItem(key);
-//     var parsedIdea = JSON.parse(retrievedIdea);
-
-
-//   if (parsedIdea['quality'] === ('quality: genius')) {
-//     $(this).closest('label').siblings('h3').text('quality: plausible');
-//     parsedIdea['quality'] = 'quality: plausible';
-
-//     var stringifiedObject = JSON.stringify(parsedIdea);
-//     localStorage.setItem(key, stringifiedObject);
-
-
-//   } else if (parsedIdea['quality'] === ('quality: plausible')) {
-//    $(this).closest('label').siblings('h3').text('quality: swill');
-//    parsedIdea['quality'] = 'quality: swill'
-
-
-//    var stringifiedObject = JSON.stringify(parsedIdea);
-//     localStorage.setItem(key, stringifiedObject);
-//  } 
-// });
+// Attempt to make setLocalStorage function for both levelup and down
+// function setLocalStorage(parsedKey) {
+//   var stringifiedObject = JSON.stringify(parsedKey);
+//   localStorage.setItem(key, stringifiedObject);
+// }
 
 
 $('#filter').on('keyup', function() {
@@ -157,5 +167,5 @@ $('#filter').on('keyup', function() {
   $('article').each(function(){
     var searchResult = $(this).text().indexOf(searchRequest);
     this.style.display = searchResult > -1 ? "" : "none";
-  })
-})
+  });
+});
