@@ -129,7 +129,7 @@ function levelDown() {
     $(this).closest('.level-down').siblings('h3').text('level: none');
     parsedKey.level = 'level: none';
    }
-  var stringifiedObject = JSON.stringify(parsedTask);
+  var stringifiedObject = JSON.stringify(parsedKey);
   localStorage.setItem(key, stringifiedObject);
 }
 
@@ -150,7 +150,7 @@ function levelUp() {
     $(this).closest('.level-up').siblings('h3').text('level: critical');
     parsedKey.level = 'level: critical';
   } 
-  var stringifiedObject = JSON.stringify(parsedTask);
+  var stringifiedObject = JSON.stringify(parsedKey);
   localStorage.setItem(key, stringifiedObject);
 }
 
