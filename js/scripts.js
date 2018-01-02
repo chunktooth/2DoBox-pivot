@@ -4,18 +4,21 @@ $('.save-btn').on('click', grabValue);
 $('.to-do').on('click', '.remove', removeTask);
 $('.to-do').on('click', '.title', editTitle);
 $('.to-do').on('click', '.task', editTask);
-// $('.to-do').on('click', '.level-up', levelHigh);
+$('.to-do').on('click', '.level-up', levelHigh);
 // $('.to-do').on('click', '.level-down', levelLow);
 
+function getLocalStorageKey(){
+  var key = $(this).closest('article').attr('id');
+  var retrievedKey = localStorage.getItem(key);
+  var parsedKey = JSON.parse(retrievedKey);
+  levelHigh(parsedKey);
+  levelLow(parsedKey);
+};
 
-
-// var key = $(this).closest('article').attr('id');
-// var retrievedKey = localStorage.getItem(key);
-// var parsedKey = JSON.parse(retrievedKey);
-// var stringifiedObject = JSON.stringify(parsedKey);
-// localStorage.setItem(key, stringifiedObject);
-
-
+function setLocalStorageKey(parsedKey){
+  var stringifiedObject = JSON.stringify(parsedKey);
+  localStorage.setItem(parsedKey, stringifiedObject);
+}
 
 function enableSaveBtn(e) {
   e.preventDefault();
@@ -116,7 +119,8 @@ function editTask(){
 //   } else if (parsedKey.level === ('level: high')) {
 //     $(this).closest('level').siblings('h3').text('level: critical');
 //     parsedKey.level = 'level: critical';
-//  } 
+//   } 
+//   setLocalStorageKey(parsedKey);
 // };
 
 
@@ -148,10 +152,10 @@ function editTask(){
 // });
 
 
-// $('#filter').on('keyup', function() {
-//   var searchRequest = $('#filter').val();
-//   $('article').each(function(){
-//     var searchResult = $(this).text().indexOf(searchRequest);
-//     this.style.display = searchResult > -1 ? "" : "none";
-//   })
-// })
+$('#filter').on('keyup', function() {
+  var searchRequest = $('#filter').val();
+  $('article').each(function(){
+    var searchResult = $(this).text().indexOf(searchRequest);
+    this.style.display = searchResult > -1 ? "" : "none";
+  })
+})
