@@ -23,14 +23,13 @@ header {
   height: 45vh;
   justify-content: center;
   position: fixed;
-  top: 0px;
+  top: 110px;
   width: 100vw;
 }
 
 h1 {
   display: block;
-  margin: 2% 2%;
-  color: #900c3ft;
+  margin: 50px;
   font-size: 2.5rem;
 }
 
@@ -39,6 +38,7 @@ h1 {
 }
 
 .input-field {
+  background-color: #F7F4B3;
   border: 1px solid #D1D3D4;
   display: block;
   height: 2rem;
