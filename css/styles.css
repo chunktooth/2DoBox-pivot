@@ -8,7 +8,7 @@ body {
   margin: 0px;
   position: relative;
   font-size: 10px;
-  background-image: url('../img/legal-pad.png');
+  background-image: url('../img/notebook.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   height: 100vh;
@@ -66,6 +66,50 @@ h1 {
   background-color: #900c3f;
 }
 
+.filter {
+  left: 25%;
+  position: fixed;
+  top: 44%;
+  width: 50vw;
+  z-index: 1;
+}
+
+.btn-levels {
+  position: fixed;
+  top: 51%;
+  left: 26%;
+  z-index: 1;
+}
+
+.btn {
+  width: 5rem;
+  height: 1.6rem;
+  text-align: center;
+  color: white;
+  margin: .6rem;
+  font-size: 1rem;
+}
+
+.btn1 {
+  background-color: red;
+}
+
+.btn2 {
+  background-color: #FF7000;
+}
+
+.btn3 {
+  background-color: green;
+}
+
+.btn4 {
+  background-color: blue;
+}
+
+.btn5 {
+  background-color: purple;
+}
+
 .to-do {
   align-items: center;
   bottom: 0px;
@@ -76,14 +120,7 @@ h1 {
   overflow: scroll;
   position: fixed;
   width: 100vw;
-}
-
-.filter {
-  left: 25%;
-  position: fixed;
-  top: 44%;
-  width: 50vw;
-  z-index: 1;
+  top: 58%;
 }
 
 article {
@@ -110,6 +147,7 @@ p {
   height: 2.25em;
   margin-right: 10px; 
   width: 2.25em;
+  border-radius: 50%;
 }
 
 .remove {
@@ -145,6 +183,10 @@ h3 {
   display: inline-block;
   margin: 0px auto 10px 10px;
   vertical-align: super;
+}
+
+.completed-task {
+  display: block;
 }
 
 @media screen and (max-width: 770px) {
