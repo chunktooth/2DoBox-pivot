@@ -6,21 +6,7 @@ $('.to-do').on('click', '.title', editTitle);
 $('.to-do').on('click', '.task', editTask);
 $('.to-do').on('click', '.level-up', levelUp);
 $('.to-do').on('click', '.level-down', levelDown);
-
-
-// Attempting to create function that passes the key 
-// to other level of importance buttons
-// function getLocalStorageKey(){
-//   var key = $(this).closest('article').attr('id');
-//   var retrievedKey = localStorage.getItem(key);
-//   var parsedKey = JSON.parse(retrievedKey);
-//   levelHigh(parsedKey);
-//   levelLow(parsedKey);
-// };
-// function setLocalStorageKey(parsedKey){
-//   var stringifiedObject = JSON.stringify(parsedKey);
-//   localStorage.setItem(parsedKey, stringifiedObject);
-// }
+$('.filter').on('keyup', filterText);
 
 function enableSaveBtn(e) {
   e.preventDefault();
@@ -88,84 +74,78 @@ function removeTask() {
   localStorage.removeItem($(this).closest('article').attr('id'));
 }
 
+function retrieveKey(event){
+  var key = event.target.closest('article').id;
+  var retrievedKey = localStorage.getItem(key);
+  var parsedKey = JSON.parse(retrievedKey);
+  return parsedKey;
+};
+
+function setKey(parsedKey){
+  var stringifiedObject = JSON.stringify(parsedKey);
+  localStorage.setItem(parsedKey.id, stringifiedObject);
+}
+
 function editTitle() {
   $(this).prop('contenteditable', true).focus();
   $(this).focusout(function() {
-    var key = $(this).closest('article').attr('id')
-    var retrievedTitle = localStorage.getItem(key);
-    var parsedTitle = JSON.parse(retrievedTitle);
-    parsedTitle.title = $(this).html();
-    var stringifiedObject = JSON.stringify(parsedTitle);
-    localStorage.setItem(key, stringifiedObject);
+    var parsedKey = retrieveKey(event);
+    parsedKey.title = $(this).html();
+    setKey(parsedKey);
   });
 };
 
 function editTask(){
   $(this).prop('contenteditable', true).focus();
   $(this).focusout(function() {
-    var key = $(this).closest('article').attr('id')
-    var retrievedTask = localStorage.getItem(key);
-    var parsedTask = JSON.parse(retrievedTask);
-    parsedTask.task = $(this).html();
-    var stringifiedObject = JSON.stringify(parsedTask);
-    localStorage.setItem(key, stringifiedObject);
+    var parsedKey = retrieveKey(event);
+    parsedKey.task = $(this).html();
+    setKey(parsedKey);
   });
 };
 
 function levelDown() {
-  var key = $(this).closest('article').attr('id');
-  var retrievedKey = localStorage.getItem(key);
-  var parsedKey = JSON.parse(retrievedKey);
+  var parsedKey = retrieveKey(event);
+  var changeText = $(this).closest('.level-down').siblings('h3');
   if (parsedKey.level === ('level: critical')) {
-    $(this).closest('.level-down').siblings('h3').text('level: high');
+    changeText.text('level: high');
     parsedKey.level = 'level: high';  
   } else if (parsedKey.level === ('level: high')) {
-    $(this).closest('.level-down').siblings('h3').text('level: normal');
+    changeText.text('level: normal');
     parsedKey.level = 'level: normal';
   } else if (parsedKey.level === ('level: normal')) {
-    $(this).closest('.level-down').siblings('h3').text('level: low');
+    changeText.text('level: low');
     parsedKey.level = 'level: low';
   } else if (parsedKey.level === ('level: low')) {
-    $(this).closest('.level-down').siblings('h3').text('level: none');
+    changeText.text('level: none');
     parsedKey.level = 'level: none';
    }
-  var stringifiedObject = JSON.stringify(parsedKey);
-  localStorage.setItem(key, stringifiedObject);
+  setKey(parsedKey);
 }
 
 function levelUp() {
-  var key = $(this).closest('article').attr('id');
-  var retrievedKey = localStorage.getItem(key);
-  var parsedKey = JSON.parse(retrievedKey);
+  var parsedKey = retrieveKey(event);
+  var changeText = $(this).closest('.level-up').siblings('h3');
   if (parsedKey.level === ('level: none')) {
-    $(this).closest('.level-up').siblings('h3').text('level: low');
+    changeText.text('level: low');
     parsedKey.level = 'level: low';
    } else if (parsedKey.level === ('level: low')) {
-    $(this).closest('.level-up').siblings('h3').text('level: normal');
+    changeText.text('level: normal');
     parsedKey.level = 'level: normal';
   } else if (parsedKey.level === ('level: normal')) {
-    $(this).closest('.level-up').siblings('h3').text('level: high');
+    changeText.text('level: high');
     parsedKey.level = 'level: high';
   } else if (parsedKey.level === ('level: high')) {
-    $(this).closest('.level-up').siblings('h3').text('level: critical');
+    changeText.text('level: critical');
     parsedKey.level = 'level: critical';
   } 
-  var stringifiedObject = JSON.stringify(parsedKey);
-  localStorage.setItem(key, stringifiedObject);
+  setKey(parsedKey);
 }
 
-
-// Attempt to make setLocalStorage function for both levelup and down
-// function setLocalStorage(parsedKey) {
-//   var stringifiedObject = JSON.stringify(parsedKey);
-//   localStorage.setItem(key, stringifiedObject);
-// }
-
-
-$('#filter').on('keyup', function() {
-  var searchRequest = $('#filter').val();
+function filterText(){
+  var searchRequest = $('.filter').val().toLowerCase();
   $('article').each(function(){
     var searchResult = $(this).text().indexOf(searchRequest);
     this.style.display = searchResult > -1 ? "" : "none";
   });
-});
+};
