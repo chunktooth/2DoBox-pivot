@@ -55,10 +55,11 @@ function showTask(newTask) {
       <h2 class="title">${newTask.title}</h2>
       <button class="remove button"></button>
       <p class="task">${newTask.task}</p>
-      <button class="level-up button" name="quality-up-button">
+      <button class="level-up button">
       </button>
-      <button class="level-down button" name="quality-down-button"></button>
+      <button class="level-down button"></button>
       <h3>${newTask.level}</h3>
+      <button class="completed-task">Completed Task</button>
     </article>`
   );
 };
