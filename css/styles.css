@@ -123,6 +123,10 @@ h1 {
   top: 58%;
 }
 
+.strike-text {
+  text-decoration-line: line-through;
+}
+
 article {
   border-bottom: 1px solid #D1D3D4;
   margin-bottom: 10px;
@@ -187,6 +191,7 @@ h3 {
 
 .completed-task {
   display: block;
+  background-color: white;
 }
 
 @media screen and (max-width: 770px) {

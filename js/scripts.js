@@ -7,6 +7,7 @@ $('.to-do').on('click', '.task', editTask);
 $('.to-do').on('click', '.level-up', levelUp);
 $('.to-do').on('click', '.level-down', levelDown);
 $('.filter').on('keyup', filterText);
+$('.to-do').on('click', '.completed-task', strikeText);
 
 function enableSaveBtn(e) {
   e.preventDefault();
@@ -127,7 +128,7 @@ function levelDown() {
 function levelUp() {
   var parsedKey = retrieveKey(event);
   var changeText = $(this).closest('.level-up').siblings('h3');
-  if (parsedKey.level === ('level: none')) {
+    if (parsedKey.level === ('level: none')) {
     changeText.text('level: low');
     parsedKey.level = 'level: low';
    } else if (parsedKey.level === ('level: low')) {
@@ -150,3 +151,14 @@ function filterText(){
     this.style.display = searchResult > -1 ? "" : "none";
   });
 };
+
+function strikeText() {
+  var parsedKey = retrieveKey(event);
+  var changeTitle = $(this).closest('.completed-task').siblings('h2');
+  console.log(changeTitle);
+  // var titleStrike = parsedKey.title;
+  // var taskStrike = parsedKey.task;
+  // changeTitle.addClass('.strike-text');
+  // taskStrike.addClass('.strike-text');
+  setKey(parsedKey);
+}
