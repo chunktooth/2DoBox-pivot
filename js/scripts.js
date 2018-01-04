@@ -145,7 +145,7 @@ function levelUp() {
   setKey(parsedKey);
 }
 
-function filterText(){
+function filterText() {
   var searchRequest = $('.filter').val().toLowerCase();
   $('article').each(function(){
     var searchResult = $(this).text().indexOf(searchRequest);
