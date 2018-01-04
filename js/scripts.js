@@ -7,7 +7,7 @@ $('.to-do').on('click', '.task', editTask);
 $('.to-do').on('click', '.level-up', levelUp);
 $('.to-do').on('click', '.level-down', levelDown);
 $('.filter').on('keyup', filterText);
-$('.to-do').on('click', '.completed-task', strikeText);
+$('.to-do').on('click', '.completed-task', completeTask);
 
 function enableSaveBtn(e) {
   e.preventDefault();
@@ -23,6 +23,7 @@ function Task (id, title, task) {
   this.title = title;
   this.task = task;
   this.level = 'level: normal';
+  this.complete = false;
 }
 
 function grabValue(e){
@@ -53,9 +54,9 @@ function persistRefresh() {
 function showTask(newTask) {
   $('.to-do').append(
     `<article id="${newTask.id}">
-      <h2 class="title">${newTask.title}</h2>
+      <h2 class="title ${newTask.complete}">${newTask.title}</h2>
       <button class="remove button"></button>
-      <p class="task">${newTask.task}</p>
+      <p class="task ${newTask.complete}">${newTask.task}</p>
       <button class="level-up button">
       </button>
       <button class="level-down button"></button>
@@ -152,13 +153,12 @@ function filterText(){
   });
 };
 
-function strikeText() {
+function completeTask() {
   var parsedKey = retrieveKey(event);
   var changeTitle = $(this).closest('.completed-task').siblings('h2');
-  console.log(changeTitle);
-  // var titleStrike = parsedKey.title;
-  // var taskStrike = parsedKey.task;
-  // changeTitle.addClass('.strike-text');
-  // taskStrike.addClass('.strike-text');
+  var changeTask = $(this).closest('.completed-task').siblings('p');
+  changeTitle.addClass('completed');
+  changeTask.addClass('completed');
+  parsedKey.complete = 'completed';
   setKey(parsedKey);
 }
