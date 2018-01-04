@@ -7,6 +7,7 @@ $('.to-do').on('click', '.task', editTask);
 $('.to-do').on('click', '.level-up', levelUp);
 $('.to-do').on('click', '.level-down', levelDown);
 $('.filter').on('keyup', filterText);
+$('.to-do').on('click', '.completed-task', completeTask);
 
 function enableSaveBtn(e) {
   e.preventDefault();
@@ -22,6 +23,7 @@ function Task (id, title, task) {
   this.title = title;
   this.task = task;
   this.level = 'level: normal';
+  this.complete = false;
 }
 
 function grabValue(e){
@@ -52,14 +54,14 @@ function persistRefresh() {
 function showTask(newTask) {
   $('.to-do').append(
     `<article id="${newTask.id}">
-      <h2 class="title">${newTask.title}</h2>
+      <h2 class="title ${newTask.complete}">${newTask.title}</h2>
       <button class="remove button"></button>
-      <p class="task">${newTask.task}</p>
+      <p class="task ${newTask.complete}">${newTask.task}</p>
       <button class="level-up button">
       </button>
       <button class="level-down button"></button>
       <h3>${newTask.level}</h3>
-      <button class="completed-task">completed task</button>
+      <button class="completed-task">Completed Task</button>
     </article>`
   );
 };
@@ -127,7 +129,7 @@ function levelDown() {
 function levelUp() {
   var parsedKey = retrieveKey(event);
   var changeText = $(this).closest('.level-up').siblings('h3');
-  if (parsedKey.level === ('level: none')) {
+    if (parsedKey.level === ('level: none')) {
     changeText.text('level: low');
     parsedKey.level = 'level: low';
    } else if (parsedKey.level === ('level: low')) {
@@ -143,10 +145,20 @@ function levelUp() {
   setKey(parsedKey);
 }
 
-function filterText(){
+function filterText() {
   var searchRequest = $('.filter').val().toLowerCase();
   $('article').each(function(){
     var searchResult = $(this).text().indexOf(searchRequest);
     this.style.display = searchResult > -1 ? "" : "none";
   });
 };
+
+function completeTask() {
+  var parsedKey = retrieveKey(event);
+  var changeTitle = $(this).closest('.completed-task').siblings('h2');
+  var changeTask = $(this).closest('.completed-task').siblings('p');
+  changeTitle.addClass('completed');
+  changeTask.addClass('completed');
+  parsedKey.complete = 'completed';
+  setKey(parsedKey);
+}
