@@ -59,7 +59,7 @@ function showTask(newTask) {
       </button>
       <button class="level-down button"></button>
       <h3>${newTask.level}</h3>
-      <button class="completed-task">Completed Task</button>
+      <button class="completed-task">completed task</button>
     </article>`
   );
 };
