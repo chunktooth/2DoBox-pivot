@@ -151,6 +151,10 @@ p {
   top: 500px;
 }
 
+.completed {
+  text-decoration-line: line-through;
+}
+
 article {
   border-bottom: 1px solid #D1D3D4;
   margin-bottom: 10px;
